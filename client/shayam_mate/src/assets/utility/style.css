@@ -1,0 +1,546 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--text-strong);
+  margin: 0 0 0.5em;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  font-weight: 600;
+  transition: background-color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--primary-hover);
+}
+
+.btn-secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: var(--secondary-hover);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--foreground);
+  border-color: var(--border);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--muted);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--input);
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-ring);
+}
+
+textarea.input {
+  /* box-sizing: border-box (global reset) shrinks a textarea's visible
+     content area below what `rows` asks for, since the browser computes the
+     rows-based height in content-box terms and then border-box eats the
+     padding back out of it. min-height guarantees the space back. */
+  min-height: 72px;
+  line-height: 1.4;
+  resize: vertical;
+}
+
+.card {
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.error-text {
+  color: var(--destructive);
+  font-size: 0.875rem;
+}
+
+/* Wide tables scroll within their own box instead of overflowing the page
+   or getting clipped by the card's rounded corners (overflow:hidden). */
+.table-scroll {
+  overflow-x: auto;
+}
+
+/* ============================================================
+   RESPONSIVE DASHBOARD SHELL (sidebar + hamburger drawer)
+   ============================================================ */
+
+.app-sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--sidebar);
+  color: var(--sidebar-foreground);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 4px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+.dashboard-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.dashboard-main {
+  flex: 1;
+  min-width: 0; /* let content shrink instead of forcing the shell to scroll horizontally */
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: 24px;
+  min-width: 0;
+}
+
+/* ---- persistent header: same on every page, only the title changes ---- */
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 900;
+}
+
+.dashboard-header__left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.dashboard-header__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.dashboard-header__brand-name {
+  font-weight: 700;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.dashboard-header__brand-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.dashboard-header__divider {
+  width: 1px;
+  height: 22px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.dashboard-header__title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-strong);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dashboard-header__right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.icon-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.icon-btn:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.icon-btn__dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--destructive);
+  border: 1.5px solid var(--card);
+}
+
+.hamburger-btn {
+  display: none;
+}
+
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .app-sidebar.app-sidebar--open {
+    transform: translateX(0);
+  }
+
+  .hamburger-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--foreground);
+    flex-shrink: 0;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: var(--overlay);
+    z-index: 999;
+  }
+
+  .dashboard-header {
+    padding: 12px 16px;
+  }
+
+  .dashboard-content {
+    padding: 16px;
+  }
+}
+
+/* Brand wordmark competes for space with the hamburger + title on phones —
+   drop it there and let the page title (the more useful info) keep the room. */
+@media (max-width: 560px) {
+  .dashboard-header__brand,
+  .dashboard-header__divider {
+    display: none;
+  }
+}
+
+/* ============================================================
+   SHARED SPINNER (dashboard-wide — buttons, inline loading states)
+   ============================================================ */
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+/* On light/neutral backgrounds (not inside a filled primary button) */
+.spinner--dark {
+  border-color: var(--border);
+  border-top-color: var(--primary);
+}
+
+.spinner--lg {
+  width: 28px;
+  height: 28px;
+  border-width: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   UPLOAD DOCUMENT — dropzone, file preview, progress bar
+   ============================================================ */
+
+.upload-dropzone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 36px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  cursor: pointer;
+  background: var(--muted);
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.upload-dropzone:hover,
+.upload-dropzone--active {
+  border-color: var(--accent);
+  background: var(--accent-ring);
+}
+
+.upload-dropzone__icon {
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.upload-dropzone__title {
+  font-weight: 600;
+  font-size: 14.5px;
+  color: var(--text-strong);
+}
+
+.upload-dropzone__hint {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.upload-file-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.upload-file-preview__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--accent-ring);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.upload-file-preview__meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.upload-file-preview__name {
+  font-weight: 600;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.upload-file-preview__size {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.upload-file-preview__remove {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  padding: 6px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  display: flex;
+}
+
+.upload-file-preview__remove:hover {
+  background: var(--muted);
+  color: var(--destructive);
+}
+
+.upload-progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.upload-progress-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--muted);
+  overflow: hidden;
+}
+
+.upload-progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 999px;
+  transition: width 0.15s ease;
+}
+
+.upload-progress__label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.upload-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 560px) {
+  .upload-field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   SKELETON LOADER (grey block + a white wave sweeping across it,
+   shown in place of any dashboard content that's still loading)
+   ============================================================ */
+
+@keyframes skeleton-wave {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton {
+  display: block;
+  background: linear-gradient(90deg, var(--muted) 37%, #ffffff 50%, var(--muted) 63%);
+  background-size: 300% 100%;
+  animation: skeleton-wave 1.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--muted);
+  }
+}

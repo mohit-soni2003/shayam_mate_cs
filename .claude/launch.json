@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "shayam_mate_client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "client/shayam_mate", "run", "dev"],
+      "port": 5173
+    }
+  ]
+}

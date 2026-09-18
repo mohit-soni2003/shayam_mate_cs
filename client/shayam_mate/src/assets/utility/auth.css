@@ -1,0 +1,388 @@
+/* ================================================================
+   SHYAM MATE — LOGIN / SIGNUP
+   Split-screen shell, scoped under .auth-page. Shares the landing
+   page's navy/gold identity + Fraunces/Inter pairing so the public
+   site feels like one product, distinct from the dashboard console.
+   ================================================================ */
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  font-family: var(--font-landing-body);
+  background: var(--card);
+}
+
+@keyframes authFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------------------------------------------------------
+   BRAND PANEL (left, desktop only)
+   --------------------------------------------------------------- */
+
+.auth-brand {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 48px;
+  background: linear-gradient(160deg, var(--landing-ink) 0%, var(--primary) 100%);
+  color: #fff;
+}
+
+.auth-brand__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.auth-brand__glow--1 {
+  width: 340px;
+  height: 340px;
+  background: rgba(184, 134, 44, 0.35);
+  top: -120px;
+  right: -100px;
+}
+
+.auth-brand__glow--2 {
+  width: 260px;
+  height: 260px;
+  background: rgba(255, 255, 255, 0.08);
+  bottom: -80px;
+  left: -60px;
+}
+
+.auth-brand__logo {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+}
+
+.auth-brand__mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-landing-display);
+  font-weight: 600;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.auth-brand__logo span:last-child {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.auth-brand__name {
+  font-family: var(--font-landing-display);
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+}
+
+.auth-brand__sub {
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.auth-brand__mid {
+  position: relative;
+  z-index: 1;
+}
+
+.auth-brand__mid h1 {
+  color: #fff;
+  font-family: var(--font-landing-display);
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 32px;
+  max-width: 380px;
+  text-wrap: balance;
+}
+
+.auth-brand__features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 380px;
+}
+
+.auth-brand__features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.auth-brand__features li svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: #d9b877;
+}
+
+.auth-brand__foot {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--font-landing-display);
+  font-style: italic;
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ---------------------------------------------------------------
+   CONTENT PANEL (right — the actual form)
+   --------------------------------------------------------------- */
+
+.auth-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  animation: authFadeUp 0.5s ease both;
+}
+
+.auth-card__mobile-brand {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.auth-card__mobile-brand .auth-brand__mark {
+  background: var(--primary);
+  border: none;
+}
+
+.auth-card__mobile-brand .auth-brand__name {
+  color: var(--landing-ink);
+}
+
+.auth-card__title {
+  font-family: var(--font-landing-display);
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--landing-ink);
+  margin: 0 0 6px;
+}
+
+.auth-card__subtitle {
+  color: var(--text-muted);
+  font-size: 14.5px;
+  margin: 0 0 28px;
+}
+
+.auth-card__footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------
+   FORM ELEMENTS
+   --------------------------------------------------------------- */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-strong);
+}
+
+.auth-input-wrap {
+  position: relative;
+}
+
+.auth-input-wrap .input {
+  padding-right: 44px;
+}
+
+.auth-password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-password-toggle:hover {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+.auth-submit {
+  width: 100%;
+  padding: 12px;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.auth-spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  animation: authSpin 0.7s linear infinite;
+}
+
+@keyframes authSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.auth-google-btn {
+  width: 100%;
+  padding: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--card);
+}
+
+/* ---------------------------------------------------------------
+   SUCCESS STATE (signup confirmation)
+   --------------------------------------------------------------- */
+
+.auth-success {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  animation: authFadeUp 0.4s ease both;
+}
+
+.auth-success__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--success);
+  color: var(--success-foreground);
+  margin-bottom: 14px;
+}
+
+.auth-success p {
+  color: var(--text-muted);
+  margin: 0 0 22px;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------
+   RESPONSIVE
+   --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-brand {
+    display: none;
+  }
+
+  .auth-card__mobile-brand {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 420px) {
+  .auth-content {
+    padding: 20px 16px;
+  }
+
+  .auth-card__title {
+    font-size: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-card,
+  .auth-success {
+    animation: none;
+  }
+
+  .auth-spinner {
+    animation: none;
+  }
+}
